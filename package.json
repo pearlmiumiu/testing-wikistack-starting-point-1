@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "test": ""
+    "test": "mocha -w"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +25,8 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "chai-things": "^0.2.0",
     "mocha": "^3.5.3",
     "nodemon": "^1.10.0"
   }
