@@ -20,6 +20,7 @@ router.get('/', function (req, res, next) {
 
 // POST /wiki
 router.post('/', function (req, res, next) {
+
     User.findOrCreate({
         where: {
             email: req.body.authorEmail,
@@ -117,11 +118,6 @@ router.get('/:urlTitle/similar', function (req, res, next) {
 
         })
         .then(function (similarPages) {
-            if (!similarPages) {
-                var error = new Error('No similar pages were not found!');
-                error.status = 404;
-                throw error;
-            }
             res.render('index', {
                 pages: similarPages
             });
