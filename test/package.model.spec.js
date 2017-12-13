@@ -63,11 +63,11 @@ describe('Page model', function () {
         */
         describe('findByTag', function () {
             beforeEach(function(){
-                return Promise.all([
+                return Promise.all([  //takes an array of promises, resolve after every promise i nthe array  resolves
                     Page.create({
                         title: 'Test Page 1',
                         content: 'this is content 1',
-                        tags:['misc', 'test', 'star-war']
+                        tags:['misc', 'test', 'star-war']  //should be an array
                     }),
                     Page.create({
                         title: 'Test Page 2',
@@ -82,6 +82,7 @@ describe('Page model', function () {
                     .then(function (pages) {
                        // console.log("here is pages: ",pages)
                         expect(pages).to.have.lengthOf(1);
+                        //expect(pages.length).to.be.equal(1)
                         expect(pages[0].title).to.equal('test page 1');
                         done();
                     })
@@ -198,7 +199,11 @@ describe('Page model', function () {
 
  describe('Validations', function () {
    it('errors without title',function(){
-    var page=Page.build({});
+    var page=Page.build({}); // create a sequelize instance of model but not save it to the database
+    //no validation run, no hook run. 
+    //build is synchronous, for validation, we use page.build
+    //page.create--> crete a sequelize instance of model and save it to the database. 
+    //its asyncronous, return a premise for the created page
     return page
             .validate()
             .catch(function(err){

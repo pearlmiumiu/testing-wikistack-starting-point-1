@@ -5,7 +5,7 @@ var Page=require('../model').Page;
 var User=require('../models').User;
 var supertest=require('supertest-as-promised');
 var app=require('../app');
-var agent=supertest.agent(app);
+var agent=supertest.agent(app); //make fake http request
 
 describe('http request', function(){
 	before(function beforeFn(){
@@ -26,21 +26,31 @@ describe('http request', function(){
 			return agent.get('/wiki/add').expect(200);
 		});
 	});
+  /*
+  describe('GET /wiki', function () {
+  it('gets 200 on index', function (done) {
+    agent
+    .get('/wiki')
+    .expect(200, done);
+  });
+});
+*/
 	describe('GET /wiki/:urlTitle', function(){
-		it('responds with 404 on page that does not exist', function(){
+		
+        it('responds with 404 on page that does not exist', function(){
 			return agent.get('/wiki/there_is_not_something_in_the_db_with_this_title').expect(404);
 		})
 	})
 
-	it('responds with 200 on page that does exist', function () {
-            return Page.create({
-                title: 'Example Page',
-                content: 'This text does not really matter'
-            })
-                .then(function () {
-                    return agent.get('/wiki/Example_Page').expect(200);
-                });
-        });
+    	it('responds with 200 on page that does exist', function () {
+                return Page.create({
+                    title: 'Example Page',
+                    content: 'This text does not really matter'
+                })
+                    .then(function () {
+                        return agent.get('/wiki/Example_Page').expect(200);
+                    });
+            });
 
     });
 
